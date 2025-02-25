@@ -1,0 +1,21 @@
+def get_matrix_input():
+    rows = int(input("Enter the number of rows: "))
+    cols = int(input("Enter the number of columns: "))
+    print("Enter the elements of the matrix row by row (space-separated):")
+    data = []
+    for i in range(rows):
+        row = list(map(int, input().split()))
+        if len(row) != cols:
+            raise ValueError(f"Each row must have exactly {cols} elements")
+        data.append(row)
+    return data
+
+def main():
+    print("Create a Matrix")
+    matrix = get_matrix_input()
+    print("\nMatrix:")
+    for row in matrix:
+        print(' '.join(map(str, row)))
+
+if __name__ == "__main__":
+    main()
