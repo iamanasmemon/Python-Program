@@ -1,0 +1,24 @@
+def find_duplicates(matrix):
+    value_counts = {}
+    for row in matrix:
+        for value in row:
+            if value in value_counts:
+                value_counts[value] += 1
+            else:
+                value_counts[value] = 1
+    duplicates = {key: value for key, value in value_counts.items() if value > 1}
+    return duplicates
+
+def get_matrix_from_user():
+    rows = int(input("Enter the number of rows: "))
+    matrix = []
+    for i in range(rows):
+        row = list(map(int, input(f"Enter the values for row {i+1} separated by space: ").split()))
+        matrix.append(row)
+    return matrix
+
+matrix = get_matrix_from_user()
+
+duplicates = find_duplicates(matrix)
+
+print("Duplicate values in the matrix:", duplicates)
