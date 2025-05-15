@@ -1,0 +1,65 @@
+import datetime
+
+# Restaurant Menu (you can add more items here)
+menu = {
+    "Burger": 300,
+    "Pizza": 700,
+    "Fries": 150,
+    "Biryani": 250,
+    "Cold Drink": 100,
+    "Tea": 50
+}
+
+# Empty bill dictionary to store items ordered
+bill = {}
+
+def display_menu():
+    print("\n---- Menu ----")
+    for item, price in menu.items():
+        print(f"{item}: Rs. {price}")
+
+def take_order():
+    while True:
+        item = input("\nEnter item name (or type 'done' to finish): ").title()
+        if item.lower() == 'done':
+            break
+        elif item in menu:
+            try:
+                quantity = int(input(f"Enter quantity for {item}: "))
+                if item in bill:
+                    bill[item] += quantity
+                else:
+                    bill[item] = quantity
+            except ValueError:
+                print("Please enter a valid number.")
+        else:
+            print("Item not on menu. Please try again.")
+
+def print_bill():
+    print("\n--- Receipt ---")
+    now = datetime.datetime.now()
+    print("Date:", now.strftime("%Y-%m-%d %H:%M:%S"))
+    print("-" * 30)
+
+    subtotal = 0
+    for item, quantity in bill.items():
+        price = menu[item]
+        total_price = price * quantity
+        subtotal += total_price
+        print(f"{item} x {quantity} = Rs. {total_price}")
+
+    tax = subtotal * 0.05  # 5% tax
+    total = subtotal + tax
+
+    print("-" * 30)
+    print(f"Subtotal: Rs. {subtotal}")
+    print(f"Tax (5%): Rs. {tax:.2f}")
+    print(f"Total Bill: Rs. {total:.2f}")
+    print("-" * 30)
+    print("Thank you for dining with us!")
+
+# Main Program
+print("Welcome to Ahmed's Restaurant!")
+display_menu()
+take_order()
+print_bill()
