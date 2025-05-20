@@ -1,0 +1,119 @@
+import random
+
+def run_quiz():
+    """
+    Runs a space-themed multiple-choice quiz in the console.
+    Tracks the user's score and provides feedback.
+    """
+
+    # Define the quiz questions, options, and correct answers.
+    # Each question is a dictionary containing:
+    #   'question': The text of the question.
+    #   'options': A dictionary mapping option letters (A, B, C, D) to answer text.
+    #   'correct_answer': The letter corresponding to the correct option.
+    quiz_questions = [
+        {
+            'question': 'Which planet is known as the "Red Planet"?',
+            'options': {'A': 'Jupiter', 'B': 'Mars', 'C': 'Venus', 'D': 'Saturn'},
+            'correct_answer': 'B'
+        },
+        {
+            'question': 'What is the largest moon in our solar system?',
+            'options': {'A': 'Io', 'B': 'Titan', 'C': 'Ganymede', 'D': 'Europa'},
+            'correct_answer': 'C'
+        },
+        {
+            'question': 'What is the name of our home galaxy?',
+            'options': {'A': 'Andromeda', 'B': 'Triangulum Galaxy', 'C': 'Whirlpool Galaxy', 'D': 'Milky Way'},
+            'correct_answer': 'D'
+        },
+        {
+            'question': 'Which astronomical event occurs when the Moon passes directly between the Sun and Earth, casting a shadow on Earth?',
+            'options': {'A': 'Lunar Eclipse', 'B': 'Solar Eclipse', 'C': 'Meteor Shower', 'D': 'Aurora Borealis'},
+            'correct_answer': 'B'
+        },
+        {
+            'question': 'What is a light-year a measure of?',
+            'options': {'A': 'Time', 'B': 'Brightness', 'C': 'Distance', 'D': 'Weight'},
+            'correct_answer': 'C'
+        },
+        {
+            'question': 'Which planet has the most prominent ring system?',
+            'options': {'A': 'Uranus', 'B': 'Neptune', 'C': 'Saturn', 'D': 'Jupiter'},
+            'correct_answer': 'C'
+        },
+        {
+            'question': 'What is the closest star to Earth (besides the Sun)?',
+            'options': {'A': 'Sirius', 'B': 'Alpha Centauri', 'C': 'Proxima Centauri', 'D': 'Polaris'},
+            'correct_answer': 'C'
+        },
+        {
+            'question': 'What celestial body is at the center of our solar system?',
+            'options': {'A': 'Earth', 'B': 'Jupiter', 'C': 'The Sun', 'D': 'The Moon'},
+            'correct_answer': 'C'
+        },
+        {
+            'question': 'Which dwarf planet was reclassified from a planet in 2006?',
+            'options': {'A': 'Eris', 'B': 'Makemake', 'C': 'Haumea', 'D': 'Pluto'},
+            'correct_answer': 'D'
+        },
+        {
+            'question': 'What is the name of the first artificial satellite launched into space?',
+            'options': {'A': 'Explorer 1', 'B': 'Vostok 1', 'C': 'Sputnik 1', 'D': 'Apollo 1'},
+            'correct_answer': 'C'
+        }
+    ]
+
+    # Shuffle the questions to make each quiz experience slightly different.
+    random.shuffle(quiz_questions)
+
+    score = 0
+    total_questions = len(quiz_questions)
+
+    print("Welcome to the Space Quiz!\n")
+    print("Answer the following multiple-choice questions about the cosmos.")
+    print("Enter the letter (A, B, C, or D) corresponding to your answer.\n")
+
+    # Iterate through each question in the shuffled list.
+    for i, q_data in enumerate(quiz_questions):
+        print(f"--- Question {i + 1}/{total_questions} ---")
+        print(q_data['question'])
+
+        # Display options in a formatted way.
+        for option_key, option_text in q_data['options'].items():
+            print(f"  {option_key}) {option_text}")
+
+        # Loop until a valid input (A, B, C, D) is received.
+        while True:
+            user_answer = input("Your answer: ").strip().upper()
+            if user_answer in q_data['options']:
+                break
+            else:
+                print("Invalid input. Please enter A, B, C, or D.")
+
+        # Check if the user's answer is correct.
+        if user_answer == q_data['correct_answer']:
+            print("Correct!\n")
+            score += 1
+        else:
+            print(f"Incorrect. The correct answer was {q_data['correct_answer']}) {q_data['options'][q_data['correct_answer']]}.\n")
+
+    # Display final results.
+    print("--- Quiz End! ---")
+    print(f"You scored {score} out of {total_questions} questions.")
+
+    # Provide feedback based on the score.
+    percentage = (score / total_questions) * 100
+    if percentage == 100:
+        print("🚀 Absolutely stellar! You're a true Space Master!")
+    elif percentage >= 70:
+        print("✨ Great job! You know a lot about the cosmos.")
+    elif percentage >= 40:
+        print("🌌 Good effort! Keep exploring the universe to learn more.")
+    else:
+        print("🔭 Don't worry! The universe is vast, and there's always more to discover. Keep learning!")
+
+# This ensures that run_quiz() is called only when the script is executed directly.
+if __name__ == "__main__":
+    run_quiz()
+
