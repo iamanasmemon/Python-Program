@@ -1,0 +1,72 @@
+import random
+import threading
+import time
+
+def get_questions():
+    return [
+        {
+            "question": "What is the capital of France?",
+            "options": ["A) Berlin", "B) London", "C) Paris", "D) Madrid"],
+            "answer": "C"
+        },
+        {
+            "question": "Which planet is known as the Red Planet?",
+            "options": ["A) Earth", "B) Mars", "C) Jupiter", "D) Venus"],
+            "answer": "B"
+        },
+        {
+            "question": "Who wrote 'To Kill a Mockingbird'?",
+            "options": ["A) Harper Lee", "B) Mark Twain", "C) Ernest Hemingway", "D) Jane Austen"],
+            "answer": "A"
+        },
+        {
+            "question": "What is the largest mammal?",
+            "options": ["A) Elephant", "B) Blue Whale", "C) Giraffe", "D) Hippopotamus"],
+            "answer": "B"
+        },
+        {
+            "question": "Which element has the chemical symbol 'O'?",
+            "options": ["A) Gold", "B) Oxygen", "C) Silver", "D) Iron"],
+            "answer": "B"
+        }
+    ]
+
+def ask_question_with_timer(question, options, time_limit=10):
+    answer = [None]
+    def get_input():
+        answer[0] = input("Your answer (A/B/C/D): ").strip().upper()
+    
+    thread = threading.Thread(target=get_input)
+    thread.daemon = True
+    thread.start()
+    thread.join(timeout=time_limit)
+    if thread.is_alive():
+        print(f"\nTime's up! You had {time_limit} seconds.")
+        return None
+    return answer[0]
+
+def play_quiz():
+    questions = get_questions()
+    random.shuffle(questions)
+    score = 0
+    time_limit = 10  # seconds for each question
+
+    print("Welcome to the Quiz Game with Timer!\n")
+    print(f"You have {time_limit} seconds to answer each question.\n")
+
+    for idx, q in enumerate(questions):
+        print(f"Q{idx+1}: {q['question']}")
+        for opt in q['options']:
+            print(opt)
+        user_answer = ask_question_with_timer(q['question'], q['options'], time_limit)
+        if user_answer is None:
+            print(f"Wrong! The correct answer was {q['answer']}.\n")
+        elif user_answer == q['answer']:
+            print("Correct!\n")
+            score += 1
+        else:
+            print(f"Wrong! The correct answer was {q['answer']}.\n")
+    print(f"Quiz complete! Your score: {score}/{len(questions)}")
+
+if __name__ == "__main__":
+    play_quiz()
